@@ -1,0 +1,72 @@
+# todo_list_app.py
+
+def display_menu():
+    """Display the main menu options."""
+    print("\n--- TO-DO LIST MENU ---")
+    print("1. Add a task")
+    print("2. View tasks")
+    print("3. Delete a task")
+    print("4. Quit")
+
+def add_task(tasks):
+    """Prompt user to add a task to the list."""
+    task = input("Enter the task description: ").strip()
+    if task:
+        tasks.append(task)
+        print(f" Task added: '{task}'")
+    else:
+        print(" Task cannot be empty.")
+
+def view_tasks(tasks):
+    """Display all current tasks."""
+    if not tasks:
+        print(" No tasks to show.")
+    else:
+        print("\n Your Tasks:")
+        for idx, task in enumerate(tasks, start=1):
+            print(f"{idx}. {task}")
+
+def delete_task(tasks):
+    """Prompt user to delete a task by its number."""
+    if not tasks:
+        print(" No tasks to delete.")
+        return
+
+    view_tasks(tasks)
+    try:
+        task_num = int(input("Enter the task number to delete: "))
+        if 1 <= task_num <= len(tasks):
+            removed = tasks.pop(task_num - 1)
+            print(" Task removed: '{removed}'")
+        else:
+            print(" Invalid task number.")
+    except ValueError:
+        print(" Please enter a valid number.")
+
+def main():
+    """Main function to run the To-Do List application."""
+    tasks = []
+    print("Welcome to the To-Do List App!")
+
+    while True:
+        display_menu()
+        try:
+            choice = input("Enter your choice (1-4): ").strip()
+            if choice == '1':
+                add_task(tasks)
+            elif choice == '2':
+                view_tasks(tasks)
+            elif choice == '3':
+                delete_task(tasks)
+            elif choice == '4':
+                print(" Exiting the To-Do List App. Goodbye!")
+                break
+            else:
+                print(" Invalid selection. Please choose between 1 and 4.")
+        except Exception as e:
+            print(" An unexpected error occurred: {e}")
+        finally:
+            print("-" * 40)
+
+if __name__ == "__main__":
+    main()
